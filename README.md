@@ -33,7 +33,7 @@ Every request is logged, analyzed, and categorized in real time.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repo
@@ -52,7 +52,7 @@ The dashboard will be available on `http://localhost:8080`
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 llm-honeypot/
