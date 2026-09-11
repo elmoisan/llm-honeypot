@@ -4,9 +4,13 @@ Creates the FastAPI app, registers the routes, and starts the server.
 """
 
 import os
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from honeypot.config import settings
 from honeypot.endpoints import router
@@ -32,19 +36,62 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(
     title="LLM Honeypot",
     version="0.1.0",
-    # Hide the /docs page in production so we don't tip off attackers
+    # Hide the documentation endpoints in production so attackers cannot
+    # enumerate the API surface.
     docs_url="/docs" if settings.DEBUG else None,
+    openapi_url="/openapi.json" if settings.DEBUG else None,
     redoc_url=None,
     lifespan=lifespan,
 )
 
-# Allow cross-origin requests (needed if dashboard is on a different port)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
+@app.exception_handler(RequestValidationError)
+async def request_validation_exception_handler(
+    _request: Request,
+    exc: RequestValidationError,
+):
+    """Return a clean JSON payload for malformed requests."""
+    return JSONResponse(
+        status_code=400,
+        content={
+            "error": {
+                "message": "Invalid request payload",
+                "code": 400,
+                "details": exc.errors(),
+            }
+        },
+    )
+
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(
+    _request: Request, exc: StarletteHTTPException
+):
+    """Normalize HTTP exceptions to a JSON response."""
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"error": {"message": exc.detail, "code": exc.status_code}},
+    )
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(_request: Request, exc: Exception):
+    """Avoid exposing internal stack traces in production."""
+    print(f"Unhandled application error: {type(exc).__name__}: {exc}")
+    return JSONResponse(
+        status_code=500,
+        content={"error": {"message": "Internal server error", "code": 500}},
+    )
+
+
+# Enable CORS only in development or when explicitly needed locally.
+if settings.DEBUG:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # Register all the fake LLM endpoints
 app.include_router(router)
