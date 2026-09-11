@@ -14,10 +14,18 @@ env/
 
 # Environment
 .env
+.env.*
+!.env.example
 *.env.local
 
-# Logs
+# Sensitive runtime data
 logs/
+*.jsonl
+*.sqlite3
+*.db
+*.pem
+*.key
+*.crt
 
 # IDE
 .vscode/
