@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LLM Honeypot Security Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .label {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .threat-high {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .threat-medium {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .threat-low {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .bar {
+            display: inline-block;
+            background: #667eea;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍯 LLM Honeypot Security Report</h1>
+            <p>Attack Analysis &amp; Threat Intelligence</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>Executive Summary</h2>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="value">149</div>
+                        <div class="label">Total Attacks</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="value">73</div>
+                        <div class="label">API Key Attempts</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="value">1</div>
+                        <div class="label">Countries</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="value">2</div>
+                        <div class="label">Unique IPs</div>
+                    </div>
+                </div>
+                <p>
+                    <strong>Analysis Period:</strong>
+                    2026-06-07T21:28:27.102107+00:00 → 2026-09-11T21:23:58.327118+00:00
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Threat Level Distribution</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Threat Level</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="threat-low">
+                                    LOW
+                                </span>
+                            </td>
+                            <td>143</td>
+                            <td>
+                                <div class="bar" style="width: 287.9194630872483px;">
+                                </div> 96.0%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="threat-high">
+                                    HIGH
+                                </span>
+                            </td>
+                            <td>6</td>
+                            <td>
+                                <div class="bar" style="width: 12.080536912751677px;">
+                                </div> 4.0%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Top Attacked Endpoints</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>Attacks</th>
+                            <th>Distribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>/v1/chat/completions</code></td>
+                            <td>41</td>
+                            <td>
+                                <div class="bar" style="width: 82.5503355704698px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/api/logs</code></td>
+                            <td>40</td>
+                            <td>
+                                <div class="bar" style="width: 80.53691275167785px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/v1/models</code></td>
+                            <td>23</td>
+                            <td>
+                                <div class="bar" style="width: 46.308724832214764px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/favicon.ico</code></td>
+                            <td>11</td>
+                            <td>
+                                <div class="bar" style="width: 22.14765100671141px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/v1/embeddings</code></td>
+                            <td>11</td>
+                            <td>
+                                <div class="bar" style="width: 22.14765100671141px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/v1/unknown/endpoint</code></td>
+                            <td>11</td>
+                            <td>
+                                <div class="bar" style="width: 22.14765100671141px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/</code></td>
+                            <td>10</td>
+                            <td>
+                                <div class="bar" style="width: 20.13422818791946px;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>/not-a-real-route</code></td>
+                            <td>2</td>
+                            <td>
+                                <div class="bar" style="width: 4.026845637583892px;">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Attack Categories</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Occurrences</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>recon</td>
+                            <td>76</td>
+                        </tr>
+                        <tr>
+                            <td>api_key_enumeration</td>
+                            <td>61</td>
+                        </tr>
+                        <tr>
+                            <td>generic_probe</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>prompt_injection</td>
+                            <td>6</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Top Detected Patterns</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>endpoint probe</td>
+                            <td>62</td>
+                        </tr>
+                        <tr>
+                            <td>OpenAI key format</td>
+                            <td>55</td>
+                        </tr>
+                        <tr>
+                            <td>unknown request pattern</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>unknown endpoint probe</td>
+                            <td>11</td>
+                        </tr>
+                        <tr>
+                            <td>ignore previous instructions</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>OpenAI project key format</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>empty request probe</td>
+                            <td>3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Geographic Distribution</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Attacks</th>
+                            <th>Distribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Local</td>
+                            <td>149</td>
+                            <td>
+                                <div class="bar" style="width: 300.0px;">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Payload Statistics</h2>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="value">24.04</div>
+                        <div class="label">Average Size</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="value">124</div>
+                        <div class="label">Max Size</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="value">149</div>
+                        <div class="label">Total Payloads</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated on 2026-10-06 22:36:39 UTC
+            </p>
+            <p>LLM Honeypot Security Analysis</p>
+        </div>
+    </div>
+</body>
+</html>
